@@ -80,8 +80,16 @@ const Login = () => {
                           wrapperClass="oval"
                           />)
                           :
-                          <button className=' w-[100%] py-[10px] text-[18px] text-[#fff] font-[600] font-robot cursor-pointer bg-[#5F35F5] rounded-[10px] ' onClick={signbtn}>Sign up</button>
+                          <button className=' w-[100%] py-[10px] text-[18px] text-[#fff] font-[600] font-robot cursor-pointer bg-[#5F35F5] rounded-[10px] delay-75 hover:bg-[#2F1AC4] ' onClick={signbtn}>Sign up</button>
                       }
+                    </div>
+                    <div className='flex items-center justify-left gap-x-[5px] mt-[20px]'>
+                      <Heading level='h4' children="Don't have an account ?" className='text-[14px] text-[#11175D] font-[400] font-robot'/>
+                      <Link className='text-[16px] text-[#0f8a2a] font-[600] font-robot cursor-pointer' to="registration">Sign up</Link>
+                    </div>
+                    <div className='flex items-center justify-left gap-x-[5px] mt-[10px]'>
+                      <Heading level='h4' children="Your forget password! ?" className='text-[14px] text-[#11175D] font-[400] font-robot'/>
+                      <Link className='text-[16px] text-[#2bdce2] font-[600] font-robot cursor-pointer' to="forgetpass">Forget Password</Link>
                     </div>
                 </form>
           </div>
