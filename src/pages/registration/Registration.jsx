@@ -66,7 +66,7 @@ const Registration = () => {
                   <p className='text-[white] text-base font-normal font-roboto'>{formik.errors.conPass}</p>
                 ) : null}
                 </Div>
-              <Button className="w-full bg-[#72ff56]	text-[black] mt-[15px] text-xl p-4 rounded-xl font-bold font-roboto" text="Submit" type="submit"/>
+              <Button className="w-full bg-[#72ff56a6] hover:bg-[#72ff56]	text-[black] mt-[15px] text-xl p-4 rounded-xl font-bold font-roboto" text="Submit" type="submit"/>
             </form>
             <span className='font-roboto text-lg font-normal text-white'>Already have an account? <Link className='text-[#272926] font-medium' to="/"> Login</Link></span>
        </Div>
