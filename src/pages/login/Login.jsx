@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
-import Heading from '../../utilities/heading/Heading'
+import React, { useState } from 'react';
+import Heading from '../../utilities/heading/Heading';
 import TextField from '@mui/material/TextField';
 import { Oval } from 'react-loader-spinner';
-import { Link } from 'react-router-dom';
-import backimg from '../../images/loginimg.jpg'
-import google from '../../images/google.svg'
+import { Link, useNavigate } from 'react-router-dom';
+import backimg from '../../images/loginimg.jpg';
+import google from '../../images/google.svg';
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import './Login.css'
 const Login = () => {
+ const auth = getAuth()
+ const navigate = useNavigate()
+ let [loder , setLoder] = useState(false)
 
             //all input data add this userData state
   let [userData , setUserData] = useState({
@@ -27,21 +31,40 @@ const Login = () => {
   let emailregex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ 
 
   let signbtn = (e)=>{ 
-    e.preventDefault()
+    e.preventDefault();
           //validation
       if(!userData.email){
-        setError({email:"Email is Require"})
+        setError({email:"Email is Require"});
       }else if(!userData.email.match(emailregex)){
-        setError({email:""})
-        setError({email:"Inter valid Email"})
+        setError({email:""});
+        setError({email:"Inter valid Email"});
       }else if(!userData.password){
-        setError({password:"Password is Require"})
+        setError({password:"Password is Require"});
       }else{
-        setLoder(true)
-        console.log(userData);
+        setLoder(true);
+        signInWithEmailAndPassword(auth, userData.email, userData.password)
+        .then((userCredential) => {
+          if(userCredential.user.emailVerified){
+            navigate("/home")
+         }else{
+            signOut(auth).then(() => {
+              setError({email:"Verify your email"});
+              console.log("aci");
+              setLoder(false)
+            });
+         }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          if(errorCode == "auth/invalid-credential"){
+            setError({email:"Signin your email"});
+            setLoder(false);
+          }else{
+            setError({email: ""});
+          }
+        });
       }
   }
-  let [loder , setLoder] = useState(false)
   return (
     <section id='login'>
           <img src={backimg} alt="not found" />
@@ -58,11 +81,11 @@ const Login = () => {
                     </div>
                     <div className='w-[100%] mt-[20px] flex flex-col gap-y-[20px]  '>
                       <div className='w-[100%]'>
-                        <TextField id='outlined-basic' className='w-[100%] '  type='email' label='Email' name ='email' onChange={handleSigin}  variant='outlined'/>
+                        <TextField id='outlined-basic' className='w-[100%] ' value={userData.email}  type='email' label='Email' name ='email' onChange={handleSigin}  variant='outlined'/>
                         {error.email && <p className='mt-[10px] text-[red] text-[14px] font-500 font-roboto'>{error.email}</p>}
                       </div>
                       <div className='w-[100%]'>
-                        <TextField id='outlined-basic' className='w-[100%]' type='password' label="Password" name ='password' onChange={handleSigin} variant='outlined' />
+                        <TextField id='outlined-basic' className='w-[100%]' value={userData.password} type='password' label="Password" name ='password' onChange={handleSigin} variant='outlined' />
                         {error.password && <p className='mt-[10px] text-[red] text-[14px] font-500 font-roboto'>{error.password}</p>}
                       </div>
                     </div>
