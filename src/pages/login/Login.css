@@ -12,3 +12,21 @@
 .oval{
     padding: 9px 0;
 }
+.login_input_box_password{
+    width: 100%;
+    position: relative;
+}
+.login_open_eye {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 20px;
+    color: #000;
+}
+.login_closs_eye{
+    position: absolute;
+    right:20px;
+    top: 20px;
+    font-size: 20px;
+    color: #000;
+}

@@ -9,10 +9,14 @@ import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import './Login.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { IoIosEye } from "react-icons/io";
+import { IoEyeOffOutline } from "react-icons/io5";
+
 const Login = () => {
  const auth = getAuth()
  const navigate = useNavigate()
  let [loder , setLoder] = useState(false)
+ let [checktype , setChecktype] = useState(false)
 
             //all input data add this userData state
   let [userData , setUserData] = useState({
@@ -44,9 +48,10 @@ const Login = () => {
         setError({password:"Password is Require"});
       }else{
         setLoder(true);
+                //firebase authentication
         signInWithEmailAndPassword(auth, userData.email, userData.password)
         .then((userCredential) => {
-          if(userCredential.user.emailVerified){
+          if(userCredential.user.emailVerified){ //check email verified
             navigate("/home")
          }else{
             signOut(auth).then(() => {
@@ -60,7 +65,6 @@ const Login = () => {
                 progress: undefined,
                 theme: "light",
                 });
-              console.log("aci");
               setLoder(false)
             });
          }
@@ -108,8 +112,15 @@ const Login = () => {
                         <TextField id='outlined-basic' className='w-[100%] ' value={userData.email}  type='email' label='Email' name ='email' onChange={handleSigin}  variant='outlined'/>
                         {error.email && <p className='mt-[10px] text-[red] text-[14px] font-500 font-roboto'>{error.email}</p>}
                       </div>
-                      <div className='w-[100%]'>
-                        <TextField id='outlined-basic' className='w-[100%]' value={userData.password} type='password' label="Password" name ='password' onChange={handleSigin} variant='outlined' />
+                      <div className='login_input_box_password'>
+                        <TextField id='outlined-basic' className='w-[100%]' value={userData.password} type={checktype ? "password" : "text"} label="Password" name ='password' onChange={handleSigin} variant='outlined' />
+                        {  
+                         checktype  
+                          ?
+                         <IoEyeOffOutline className='login_closs_eye' onClick={()=>{setChecktype(!checktype)}}/>
+                          :
+                          <IoIosEye className='login_open_eye' onClick={()=>{setChecktype(!checktype)}} />
+                         }
                         {error.password && <p className='mt-[10px] text-[red] text-[14px] font-500 font-roboto'>{error.password}</p>}
                       </div>
                     </div>
