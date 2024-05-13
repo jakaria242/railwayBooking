@@ -7,6 +7,8 @@ import backimg from '../../images/loginimg.jpg';
 import google from '../../images/google.svg';
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import './Login.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
  const auth = getAuth()
  const navigate = useNavigate()
@@ -48,7 +50,16 @@ const Login = () => {
             navigate("/home")
          }else{
             signOut(auth).then(() => {
-              setError({email:"Verify your email"});
+              toast.error('Please verify your email', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
               console.log("aci");
               setLoder(false)
             });
@@ -57,7 +68,7 @@ const Login = () => {
         .catch((error) => {
           const errorCode = error.code;
           if(errorCode == "auth/invalid-credential"){
-            setError({email:"Signin your email"});
+            setError({email:"invalid email or password"});
             setLoder(false);
           }else{
             setError({email: ""});
@@ -66,6 +77,19 @@ const Login = () => {
       }
   }
   return (
+  <>
+    <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
     <section id='login'>
           <img src={backimg} alt="not found" />
           <div className='max-w-container mx-auto '>
@@ -117,6 +141,7 @@ const Login = () => {
                 </form>
           </div>
     </section>
+  </>
   )
 }
 

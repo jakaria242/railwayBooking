@@ -26,5 +26,5 @@ export const  validationSchema = Yup.object({
               )
               .required("Please enter your password"),
     conPass: Yup.string()
-             .oneOf([Yup.ref("password"), null], "Passwords must match"),     
+             .oneOf([Yup.ref("password"), null], "Passwords not match"),     
 })
