@@ -1,0 +1,17 @@
+.user-setting-contant-box{
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+.user-profile-box{
+    position: relative;
+}
+.user-profile-box::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -30px;
+    width: 90%;
+    height: 1px;
+    background: #726b6b;
+}

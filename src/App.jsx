@@ -9,6 +9,7 @@ import Registration from "./pages/registration/Registration";
 import Home from "./pages/home/Home";
 import ShowTicket from "./pages/showTicket/ShowTicket";
 import ErrorPage from "./pages/errorPage/ErrorPage";
+import Userprofile from "./pages/userprofile/Userprofile";
 
 function App() {
   const router = createBrowserRouter(
@@ -18,6 +19,7 @@ function App() {
       <Route path="/registration" element={<Registration/>}/>
       <Route path="/home" element={<Home/>}/>
       <Route path="/showticket" element={<ShowTicket/>}/>
+      <Route path = '/userprofile' element = {<Userprofile/>}/>
       <Route path="*" element={<ErrorPage/>}/>
      </Route>
     )
